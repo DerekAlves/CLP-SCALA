@@ -1,0 +1,300 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "slick-codegen-example-main",
+        "directory": "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main",
+        "workspaceDir": "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main",
+        "sources": [
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\src\\main\\scala",
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\src\\main\\scala-2.12",
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\src\\main\\scala-2",
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\src\\main\\java",
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\target\\scala-2.12\\src_managed\\main"
+        ],
+        "dependencies": [
+            
+        ],
+        "classpath": [
+            "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-library.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\slick\\slick_2.12\\3.4.1\\slick_2.12-3.4.1.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\slick\\slick-codegen_2.12\\3.4.1\\slick-codegen_2.12-3.4.1.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\slf4j\\slf4j-nop\\2.0.7\\slf4j-nop-2.0.7.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\xerial\\sqlite-jdbc\\3.41.2.1\\sqlite-jdbc-3.41.2.1.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\slf4j\\slf4j-api\\2.0.7\\slf4j-api-2.0.7.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\config\\1.4.2\\config-1.4.2.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\reactivestreams\\reactive-streams\\1.0.4\\reactive-streams-1.0.4.jar",
+            "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\modules\\scala-collection-compat_2.12\\2.8.1\\scala-collection-compat_2.12-2.8.1.jar"
+        ],
+        "out": "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\.bloop\\slick-codegen-example-main",
+        "classesDir": "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\.bloop\\slick-codegen-example-main\\scala-2.12\\classes",
+        "resources": [
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\src\\main\\resources",
+            "C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main\\target\\scala-2.12\\resource_managed\\main"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.12.17",
+            "options": [
+                "-deprecation"
+            ],
+            "jars": [
+                "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-library.jar",
+                "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-compiler.jar",
+                "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-reflect.jar",
+                "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-xml_2.12-2.1.0.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                },
+                {
+                    "names": [
+                        "zio.test.sbt.ZTestFramework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "C:\\Users\\derek\\AppData\\Local\\Coursier\\cache\\arc\\https\\github.com\\AdoptOpenJDK\\openjdk8-binaries\\releases\\download\\jdk8u292-b10\\OpenJDK8U-jdk_x64_windows_hotspot_8u292b10.zip\\jdk8u292-b10\\jre",
+                "options": [
+                    "-Duser.dir=C:\\Users\\derek\\Desktop\\slick-codegen-example-main\\slick-codegen-example-main"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.17",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-library.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\scala-library\\2.12.17\\scala-library-2.12.17-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.slick",
+                    "name": "slick_2.12",
+                    "version": "3.4.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slick_2.12",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\slick\\slick_2.12\\3.4.1\\slick_2.12-3.4.1.jar"
+                        },
+                        {
+                            "name": "slick_2.12",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\slick\\slick_2.12\\3.4.1\\slick_2.12-3.4.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe.slick",
+                    "name": "slick-codegen_2.12",
+                    "version": "3.4.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slick-codegen_2.12",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\slick\\slick-codegen_2.12\\3.4.1\\slick-codegen_2.12-3.4.1.jar"
+                        },
+                        {
+                            "name": "slick-codegen_2.12",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\slick\\slick-codegen_2.12\\3.4.1\\slick-codegen_2.12-3.4.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "slf4j-nop",
+                    "version": "2.0.7",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slf4j-nop",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\slf4j\\slf4j-nop\\2.0.7\\slf4j-nop-2.0.7.jar"
+                        },
+                        {
+                            "name": "slf4j-nop",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\slf4j\\slf4j-nop\\2.0.7\\slf4j-nop-2.0.7-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.xerial",
+                    "name": "sqlite-jdbc",
+                    "version": "3.41.2.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "sqlite-jdbc",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\xerial\\sqlite-jdbc\\3.41.2.1\\sqlite-jdbc-3.41.2.1.jar"
+                        },
+                        {
+                            "name": "sqlite-jdbc",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\xerial\\sqlite-jdbc\\3.41.2.1\\sqlite-jdbc-3.41.2.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.slf4j",
+                    "name": "slf4j-api",
+                    "version": "2.0.7",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "slf4j-api",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\slf4j\\slf4j-api\\2.0.7\\slf4j-api-2.0.7.jar"
+                        },
+                        {
+                            "name": "slf4j-api",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\slf4j\\slf4j-api\\2.0.7\\slf4j-api-2.0.7-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "com.typesafe",
+                    "name": "config",
+                    "version": "1.4.2",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "config",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\config\\1.4.2\\config-1.4.2.jar"
+                        },
+                        {
+                            "name": "config",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\com\\typesafe\\config\\1.4.2\\config-1.4.2-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.reactivestreams",
+                    "name": "reactive-streams",
+                    "version": "1.0.4",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "reactive-streams",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\reactivestreams\\reactive-streams\\1.0.4\\reactive-streams-1.0.4.jar"
+                        },
+                        {
+                            "name": "reactive-streams",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\reactivestreams\\reactive-streams\\1.0.4\\reactive-streams-1.0.4-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang.modules",
+                    "name": "scala-collection-compat_2.12",
+                    "version": "2.8.1",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-collection-compat_2.12",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\modules\\scala-collection-compat_2.12\\2.8.1\\scala-collection-compat_2.12-2.8.1.jar"
+                        },
+                        {
+                            "name": "scala-collection-compat_2.12",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\modules\\scala-collection-compat_2.12\\2.8.1\\scala-collection-compat_2.12-2.8.1-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.17",
+                    "configurations": "optional",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "C:\\Users\\derek\\.sbt\\boot\\scala-2.12.17\\lib\\scala-library.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\derek\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\scala-library\\2.12.17\\scala-library-2.12.17-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "library"
+        ]
+    }
+}

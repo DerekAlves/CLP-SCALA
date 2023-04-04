@@ -1,0 +1,4 @@
+[debug] [slick-codegen-example-main-test] Classpath dependencies List()
+[debug] [slick-codegen-example-main-test] Dependencies from configurations List(slick-codegen-example-main)
+[debug] Bloop wrote the configuration of project 'slick-codegen-example-main-test' to 'C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\.bloop\slick-codegen-example-main-test.json'
+[success] Generated .bloop\slick-codegen-example-main-test.json

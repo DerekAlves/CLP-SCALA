@@ -1,0 +1,46 @@
+2023.04.03 23:45:07 INFO  Started: Metals version 0.11.11 in workspace 'C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main' for client Visual Studio Code 1.77.0.
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/C:/Users/derek/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.11.0/scribe-slf4j_2.13-3.11.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.04.03 23:45:08 INFO  time: initialize in 0.63s
+2023.04.03 23:45:08 WARN  Build server is not auto-connectable.
+2023.04.03 23:45:08 WARN  no build target for: C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\src\main\scala\Example.scala
+2023.04.03 23:45:10 INFO  no build target found for C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\src\main\scala\Example.scala. Using presentation compiler with project's scala-library version: 3.2.2
+2023.04.03 23:45:13 INFO  time: code lens generation in 3.69s
+2023.04.03 23:45:17 INFO  running 'C:\Users\derek\AppData\Local\Coursier\cache\arc\https\github.com\AdoptOpenJDK\openjdk8-binaries\releases\download\jdk8u292-b10\OpenJDK8U-jdk_x64_windows_hotspot_8u292b10.zip\jdk8u292-b10\bin\java -Djline.terminal=jline.UnsupportedTerminal -Dsbt.log.noformat=true -Dfile.encoding=UTF-8 -Dsbt.version=1.8.2 -jar C:\Users\derek\AppData\Local\Temp\metals7996244079431387233\sbt-launch.jar -Dbloop.export-jar-classifiers=sources bloopInstall'
+2023.04.03 23:45:18 INFO  [info] Updated file C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\project\build.properties: set sbt.version to 1.8.2
+2023.04.03 23:45:18 INFO  [info] welcome to sbt 1.8.2 (AdoptOpenJDK Java 1.8.0_292)
+2023.04.03 23:45:20 INFO  [info] loading global plugins from C:\Users\derek\.sbt\1.0\plugins
+2023.04.03 23:45:22 INFO  [info] loading settings for project slick-codegen-example-main-build-build from metals.sbt ...
+2023.04.03 23:45:22 INFO  [info] loading project definition from C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\project\project
+2023.04.03 23:45:24 INFO  [info] loading settings for project slick-codegen-example-main-build from metals.sbt ...
+2023.04.03 23:45:24 INFO  [info] loading project definition from C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\project
+2023.04.03 23:45:27 INFO  [success] Generated .bloop\slick-codegen-example-main-build.json
+2023.04.03 23:45:27 INFO  [success] Total time: 2 s, completed 03/04/2023 23:45:27
+2023.04.03 23:45:28 INFO  [info] loading settings for project slick-codegen-example-main from build.sbt ...
+2023.04.03 23:45:28 INFO  [info] set current project to slick-codegen-example (in build file:/C:/Users/derek/Desktop/slick-codegen-example-main/slick-codegen-example-main/)
+2023.04.03 23:45:28 INFO  [success] Generated .bloop\slick-codegen-example-main-test.json
+2023.04.03 23:45:28 INFO  [success] Generated .bloop\slick-codegen-example-main.json
+2023.04.03 23:45:28 INFO  [success] Total time: 0 s, completed 03/04/2023 23:45:29
+2023.04.03 23:45:29 INFO  time: ran 'sbt bloopInstall' in 12s
+2023.04.03 23:45:29 INFO  Attempting to connect to the build server...
+2023.04.03 23:45:29 INFO  Bloop uses C:\Users\derek\AppData\Local\Coursier\cache\arc\https\github.com\AdoptOpenJDK\openjdk8-binaries\releases\download\jdk8u292-b10\OpenJDK8U-jdk_x64_windows_hotspot_8u292b10.zip\jdk8u292-b10 defined at C:\Users\derek\.bloop\bloop.json
+2023.04.03 23:45:29 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\.metals\bsp.trace.json or C:\Users\derek\AppData\Local\scalameta\metals\cache\bsp.trace.json
+2023.04.03 23:45:29 INFO  Attempting to connect to the build server...
+2023.04.03 23:45:29 INFO  Bloop uses C:\Users\derek\AppData\Local\Coursier\cache\arc\https\github.com\AdoptOpenJDK\openjdk8-binaries\releases\download\jdk8u292-b10\OpenJDK8U-jdk_x64_windows_hotspot_8u292b10.zip\jdk8u292-b10 defined at C:\Users\derek\.bloop\bloop.json
+2023.04.03 23:45:29 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at C:\Users\derek\Desktop\slick-codegen-example-main\slick-codegen-example-main\project\.metals\bsp.trace.json or C:\Users\derek\AppData\Local\scalameta\metals\cache\bsp.trace.json
+2023.04.03 23:45:29 INFO  time: Connected to build server in 0.22s
+2023.04.03 23:45:29 INFO  Connected to Build server: Bloop v1.5.6
+2023.04.03 23:45:33 INFO  time: indexed workspace in 3.87s
+2023.04.03 23:45:33 INFO  compiling slick-codegen-example-main (1 scala source)
+2023.04.03 23:45:36 INFO  time: compiled slick-codegen-example-main in 2.99s
+2023.04.03 23:48:06 INFO  compiling slick-codegen-example-main (1 scala source)
+2023.04.03 23:48:07 INFO  time: compiled slick-codegen-example-main in 1.44s
+2023.04.03 23:50:08 INFO  Shutting down server
+2023.04.03 23:50:08 INFO  shutting down Metals
+2023.04.03 23:50:08 INFO  Shut down connection with build server.
+2023.04.03 23:50:08 INFO  Shut down connection with build server.
+2023.04.03 23:50:08 INFO  Exiting server
