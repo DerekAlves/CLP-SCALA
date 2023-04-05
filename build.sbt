@@ -9,3 +9,4 @@ libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.7.32"
 libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.36.0.3"
 mainClass := Some("Main")
 sources in Compile += "DeleteData.scala"
+sources in Compile += "AddUsers.scala"
