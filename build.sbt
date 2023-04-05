@@ -1,12 +1,17 @@
 scalaVersion := "2.13.8"
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1"
-libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.36.0.3"
-libraryDependencies += "com.typesafe.slick" %% "slick" % "3.5.0-M2"
-libraryDependencies += "com.typesafe.slick" %% "slick-hikaricp" % "3.5.0-M2"
-libraryDependencies += "org.slf4j" % "slf4j-nop" % "2.0.7"
-libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.6"
-libraryDependencies += "org.slf4j" % "slf4j-nop" % "1.7.32"
-libraryDependencies += "org.xerial" % "sqlite-jdbc" % "3.36.0.3"
 mainClass := Some("Main")
-sources in Compile += "DeleteData.scala"
-sources in Compile += "AddUsers.scala"
+libraryDependencies ++= Seq("org.scala-lang.modules" %% "scala-parser-combinators" % "2.1.1",
+    "org.xerial" % "sqlite-jdbc" % "3.36.0.3",
+    "com.typesafe.slick" %% "slick" % "3.5.0-M2",
+    "com.typesafe.slick" %% "slick-hikaricp" % "3.5.0-M2",
+    "org.slf4j" % "slf4j-nop" % "2.0.7",
+    "ch.qos.logback" % "logback-classic" % "1.2.6", 
+    "org.slf4j" % "slf4j-nop" % "1.7.32",
+    "org.xerial" % "sqlite-jdbc" % "3.36.0.3"
+)
+sources in Compile ++= Seq(
+  "DeleteData.scala",
+  "AddUsers.scala",
+  "OpenAccount.scala",
+  "Login.scala"
+)
