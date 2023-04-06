@@ -3,16 +3,15 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
 
 object Delete {
-  case class User(cpf: String, name: String, profession: String, adress: String, email: String, profile: Int, theme: Int)
+  case class User(cpf: String, name: String, profession: String, adress: String, email: String, theme: Int)
  class Users(tag: Tag) extends Table[User](tag, "users") {
     def cpf = column[String]("cpf", O.PrimaryKey)
     def name = column[String]("name")
     def profession = column[String]("profession")
     def address = column[String]("address")
     def email = column[String]("email")
-    def profile = column[Int]("profile")
     def theme = column[Int]("theme")
-    def * = (cpf, name, profession, address, email, profile, theme) <> (User.tupled, User.unapply)
+    def * = (cpf, name, profession, address, email, theme) <> (User.tupled, User.unapply)
   }
   val users = TableQuery[Users]
    
