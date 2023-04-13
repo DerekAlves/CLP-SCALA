@@ -3,7 +3,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
 import scala.concurrent.Await
 import scala.concurrent.duration._
-
+import java.nio.file.{Files, Paths}
 
 
 object Profile{
@@ -19,20 +19,20 @@ object Profile{
     }
 
     // define um case class para representar o usuário
-    case class User(cpf: String, name: String, profession: String, address: String, email: String, theme: Int)
+    case class UserProfile(cpf: String, name: String, profession: String, address: String, email: String, theme: Int)
 
     // define uma tablea para armazenar os usuários
-    class Users(tag: Tag) extends Table[User](tag, "users") {
+    class UserProfiles(tag: Tag) extends Table[UserProfile](tag, "users") {
         def cpf = column[String]("cpf", O.PrimaryKey, O.Length(11))
         def name = column[String]("name")
         def profession = column[String]("profession")
         def address = column[String]("address")
         def email = column[String]("email")
         def theme = column[Int]("theme")
-        def * = (cpf, name, profession, address, email, theme) <> (User.tupled, User.unapply)
+        def * = (cpf, name, profession, address, email, theme) <> (UserProfile.tupled, UserProfile.unapply)
     }
     // cria uma instância da tabela usuários 
-    val users = TableQuery[Users]
+    val users = TableQuery[UserProfiles]
 
     // define o URL do banco de dados
     val url = "jdbc:sqlite:sqlite/users.db"
@@ -40,11 +40,19 @@ object Profile{
     // cria uma conexão com o banco de dados SQLite
     val db = Database.forURL(url, driver = "org.sqlite.JDBC")
 
+    def CreateUsersDB (): Unit = {
+        println("Criando banco de dados...")
+        Await.result(db.run(users.schema.create), Duration.Inf)
+    }
+
     // insere um novo usuário ao banco de dados
-    def CreateProfile (): Unit = {
-    
-        val newUser = User(
-        readStringInput("Digite o CPF: "),
+    def CreateProfile (): String = {
+        
+        if (!Files.exists(Paths.get("sqlite/users.db"))){
+            CreateUsersDB()
+        }
+        val cpf = readStringInput("Digite o CPF: ")
+        val newUser = UserProfile(cpf,
         readStringInput("Digite o nome: "),
         readStringInput("Digite a profissão: "),
         readStringInput("Digite o endereço: "),
@@ -56,15 +64,17 @@ object Profile{
         // executa a ação de inserção e mostra o resultado
         val insertResult = db.run(insertAction)
         insertResult.onComplete {
-        case Success(rowsAffected) => println(s"Inserted $rowsAffected rows")
-        case Failure(exception) => println(s"Error inserting user: ${exception.getMessage}")
+        case Success(rowsAffected) => 
+            println(s"Inserida $rowsAffected linha(s)")
+        case Failure(exception) => println(s"Erro ao inserir usuário: ${exception.getMessage}")
         }
         
         db.close()
+        return cpf
         
     }
 
-    def ChangeProfile (): Option[User] = {
+    def ChangeProfile (): Option[UserProfile] = {
         val cpf = readStringInput("Digite o CPF: ")
         val query = users.filter(_.cpf === cpf).result.headOption
         val result= db.run(query)
@@ -89,7 +99,7 @@ object Profile{
 
 
     }
-    def QueryProfile (): Option[User] = {
+    def QueryProfile ():  Option[(String, String, String, String, String, Int)] = {
         val cpf = readStringInput("Digite o CPF: ")
         val query = users.filter(_.cpf === cpf).result.headOption
         val result = db.run(query)
@@ -115,10 +125,22 @@ object Profile{
             println(s"Address: $userAddress")
             println(s"Email: $userEmail")
             println(s"Theme: $userTheme")
+            Some(userCpf, userName, userProfession, userAddress, userEmail, userTheme)
         } else {
             println(s"CPF $cpf não foi encontrado.")
+            None
         }
-        userOption // retorna o resultado da função, se é um usuário existente ou não
+        
+    }
+
+    def deleteAllUsers(): Unit = {
+        val deleteAction = users.delete
+        val deleteResult = db.run(deleteAction)
+            deleteResult.onComplete {
+                case Success(rowsAffected) => println(s"Deleted $rowsAffected rows")
+                case Failure(exception) => println(s"Error deleting users: ${exception.getMessage}")
+            }
+            db.close()
     }
 
     

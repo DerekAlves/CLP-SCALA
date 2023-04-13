@@ -3,7 +3,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import java.nio.file.Paths
+import java.nio.file.{Files, Paths}
+import scala.util.Random
+import slick.jdbc.meta.MTable
+
 
 object BankAccount{
 
@@ -18,11 +21,72 @@ object BankAccount{
         def account_ID = column[String]("account_ID", O.Length(256)) //id da conta
         def * = (cpf, branch_name, branch_code, bank_account_number, sort_number, account_ID) <> (ClientAccount.tupled, ClientAccount.unapply)
     }
-    val db = Database.forURL("jdbc:sqlite:sqlite/clientAccounts.db", driver="org.sqlite.JDBC")
+    
+    val db = Database.forURL("jdbc:sqlite:sqlite/users.db", driver="org.sqlite.JDBC")
     val clientaccounts = TableQuery[ClientAccounts]
+    
     def CreateBankDB (): Unit = {
-        println("Criando banco de dados")
         Await.result(db.run(clientaccounts.schema.create), Duration.Inf)
     }
+    
+    def tableExists(tableName: String): Boolean = {
+        val action = MTable.getTables(tableName)
+        val result = Await.result(db.run(action), Duration.Inf)
+        result.nonEmpty
+    }
+    
+    def generateRandomString(length: Int): String = {
+        val randomChars = Random.alphanumeric.take(length).mkString
+        randomChars
+    }
+
+    def generateAccountNumbers(): (Int, Int, Int, Int, String) = {
+        // Gerar número da agência (4 dígitos)
+        val branchName = Random.nextInt(10000)
+        // Gerar dígito da agência (1 digito)
+        val branchCode = Random.nextInt(10)
+        // Gerar número da conta bancária (8 dígitos)
+        val bankAccountNumber = Random.nextInt(100000000)
+        // Gerar dígito da conta (2 dígitos)
+        val sortNumber = Random.nextInt(100)
+        // Gerar ID da conta (256 caracteres)
+        val accountID = generateRandomString(256)
+
+        (branchName, branchCode, bankAccountNumber, sortNumber, accountID)
+    }
+
+    def createBankAccount(cpf: String): Unit = {
+        println("Criando conta bancária")
+        
+        if (!tableExists("clientaccounts")) {
+            CreateBankDB()
+        }
+        
+        val (branchName, branchCode, bankAccountNumber, sortNumber, accountID) = generateAccountNumbers()
+        val bankAccount = ClientAccount(cpf,branchName, branchCode, bankAccountNumber, sortNumber, accountID)
+        val insertAction = clientaccounts += bankAccount
+        
+        // executa a ação de inserção e mostra o resultado
+        
+        val result = db.run(insertAction)
+        result.onComplete {
+            case Success(rowsAffected) => println(s"Inserida $rowsAffected linha(s)")
+            case Failure(exception) => println(s"Erro ao inserior conta bancária: ${exception.getMessage}")
+        }
+
+        db.close()
+    }
+
+    def clearBankDB(): Unit = {
+        val deleteAction = clientaccounts.delete
+        val deleteResult = db.run(deleteAction)
+            deleteResult.onComplete {
+                case Success(rowsAffected) => println(s"Deleted $rowsAffected rows")
+                case Failure(exception) => println(s"Error deleting accounts: ${exception.getMessage}")
+            }
+            db.close()
+    }
+
+
 
 }
