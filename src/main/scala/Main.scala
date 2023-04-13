@@ -5,6 +5,7 @@ import scala.util.{Success, Failure}
 import Delete._
 import OpenAccount._
 import Profile._
+import BankAccount._
 object Main extends App {
 
   println("Digite\n1 para inserir usuário\n2 para apagar todos os usuários (Apenas para testes, isso deve ser removido depois)" +
@@ -19,6 +20,5 @@ object Main extends App {
     case 4 => QueryProfile()
     case _ => println("Opção inválida")
   }
-  //
   
 } 

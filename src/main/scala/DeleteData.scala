@@ -5,7 +5,7 @@ import scala.util.{Success, Failure}
 object Delete {
   case class User(cpf: String, name: String, profession: String, adress: String, email: String, theme: Int)
  class Users(tag: Tag) extends Table[User](tag, "users") {
-    def cpf = column[String]("cpf", O.PrimaryKey)
+    def cpf = column[String]("cpf", O.PrimaryKey, O.Length(11))
     def name = column[String]("name")
     def profession = column[String]("profession")
     def address = column[String]("address")
