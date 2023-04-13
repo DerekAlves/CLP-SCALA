@@ -35,7 +35,7 @@ object Profile{
     val users = TableQuery[UserProfiles]
 
     // define o URL do banco de dados
-    val url = "jdbc:sqlite:sqlite/users.db"
+    val url = "jdbc:sqlite:sqlite/accounts.db"
 
     // cria uma conexão com o banco de dados SQLite
     val db = Database.forURL(url, driver = "org.sqlite.JDBC")
@@ -48,7 +48,7 @@ object Profile{
     // insere um novo usuário ao banco de dados
     def CreateProfile (): String = {
         
-        if (!Files.exists(Paths.get("sqlite/users.db"))){
+        if (!Files.exists(Paths.get("sqlite/accounts.db"))){
             CreateUsersDB()
         }
         val cpf = readStringInput("Digite o CPF: ")

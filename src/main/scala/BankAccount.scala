@@ -22,7 +22,7 @@ object BankAccount{
         def * = (cpf, branch_name, branch_code, bank_account_number, sort_number, account_ID) <> (ClientAccount.tupled, ClientAccount.unapply)
     }
     
-    val db = Database.forURL("jdbc:sqlite:sqlite/users.db", driver="org.sqlite.JDBC")
+    val db = Database.forURL("jdbc:sqlite:sqlite/accounts.db", driver="org.sqlite.JDBC")
     val clientaccounts = TableQuery[ClientAccounts]
     
     def CreateBankDB (): Unit = {
