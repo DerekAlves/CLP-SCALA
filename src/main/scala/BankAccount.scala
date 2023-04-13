@@ -12,7 +12,7 @@ object BankAccount{
 
     case class ClientAccount(cpf: String, branch_name: Int, branch_code: Int, bank_account_number: Int, sort_number: Int, account_ID: String)
     
-    class ClientAccounts(tag: Tag) extends Table[ClientAccount](tag, "clientaccounts"){
+    class ClientAccounts(tag: Tag) extends Table[ClientAccount](tag, "client_bank_accounts"){
         def cpf = column[String]("cpf", O.PrimaryKey, O.Length(11))
         def branch_name = column[Int]("branch_name") //numero da agencia
         def branch_code = column[Int]("branch_code") //digito da agencia
@@ -58,7 +58,7 @@ object BankAccount{
     def createBankAccount(cpf: String): Unit = {
         println("Criando conta bancária")
         
-        if (!tableExists("clientaccounts")) {
+        if (!tableExists("client_bank_accounts")) {
             CreateBankDB()
         }
         

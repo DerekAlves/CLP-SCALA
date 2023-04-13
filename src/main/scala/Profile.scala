@@ -22,7 +22,7 @@ object Profile{
     case class UserProfile(cpf: String, name: String, profession: String, address: String, email: String, theme: Int)
 
     // define uma tablea para armazenar os usuários
-    class UserProfiles(tag: Tag) extends Table[UserProfile](tag, "users") {
+    class UserProfiles(tag: Tag) extends Table[UserProfile](tag, "user_profiles") {
         def cpf = column[String]("cpf", O.PrimaryKey, O.Length(11))
         def name = column[String]("name")
         def profession = column[String]("profession")
