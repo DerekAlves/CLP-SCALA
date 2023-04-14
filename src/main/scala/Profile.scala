@@ -19,7 +19,7 @@ object Profile{
     }
 
     // define um case class para representar o usuário
-    case class UserProfile(cpf: String, name: String, profession: String, address: String, email: String, theme: Int)
+    case class UserProfile(cpf: String, name: String, profession: String, address: String, email: String)
 
     // define uma tablea para armazenar os usuários
     class UserProfiles(tag: Tag) extends Table[UserProfile](tag, "user_profiles") {
@@ -28,8 +28,7 @@ object Profile{
         def profession = column[String]("profession")
         def address = column[String]("address")
         def email = column[String]("email")
-        def theme = column[Int]("theme")
-        def * = (cpf, name, profession, address, email, theme) <> (UserProfile.tupled, UserProfile.unapply)
+        def * = (cpf, name, profession, address, email) <> (UserProfile.tupled, UserProfile.unapply)
     }
     // cria uma instância da tabela usuários 
     val users = TableQuery[UserProfiles]
@@ -56,8 +55,7 @@ object Profile{
         readStringInput("Digite o nome: "),
         readStringInput("Digite a profissão: "),
         readStringInput("Digite o endereço: "),
-        readStringInput("Digite o email: "),
-        readIntInput("Digite o número do tema: ")
+        readStringInput("Digite o email: ")
         )
         val insertAction = users += newUser
         
@@ -85,8 +83,7 @@ object Profile{
                     name = readStringInput(s"Digite o novo nome (${user.name}): "),
                     profession = readStringInput(s"Digite a nova profissão (${user.profession}): "),
                     address = readStringInput(s"Digite o novo endereço (${user.address}): "),
-                    email = readStringInput(s"Digite o novo email (${user.email}): "),
-                    theme = readIntInput(s"Digite o novo número do tema (${user.theme}): ")
+                    email = readStringInput(s"Digite o novo email (${user.email}): ")
                 )
                 val updateAction = users.filter(_.cpf === cpf).update(updatedUser)
                 val rowsAffected = Await.result(db.run(updateAction), Duration.Inf)
@@ -116,8 +113,7 @@ object Profile{
                 userName = user.name
                 userProfession = user.profession
                 userAddress = user.address
-                userEmail = user.email
-                userTheme = user.theme           
+                userEmail = user.email 
             }
             println(s"CPF: $userCpf")
             println(s"Name: $userName")

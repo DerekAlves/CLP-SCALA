@@ -10,16 +10,17 @@ import slick.jdbc.meta.MTable
 
 object BankAccount{
 
-    case class ClientAccount(cpf: String, branch_name: Int, branch_code: Int, bank_account_number: Int, sort_number: Int, account_ID: String)
+    case class ClientAccount(cpf: String, branch_name: String, branch_code: Int, bank_account_number: String, sort_number: Int, balance: Float, account_ID: String)
     
     class ClientAccounts(tag: Tag) extends Table[ClientAccount](tag, "client_bank_accounts"){
         def cpf = column[String]("cpf", O.PrimaryKey, O.Length(11))
-        def branch_name = column[Int]("branch_name") //numero da agencia
+        def branch_name = column[String]("branch_name") //numero da agencia
         def branch_code = column[Int]("branch_code") //digito da agencia
-        def bank_account_number = column[Int]("bank_account_number") //numero da conta
+        def bank_account_number = column[String]("bank_account_number") //numero da conta
         def sort_number = column[Int]("sort_number") //digito da conta
+        def balance = column[Float]("balance")
         def account_ID = column[String]("account_ID", O.Length(256)) //id da conta
-        def * = (cpf, branch_name, branch_code, bank_account_number, sort_number, account_ID) <> (ClientAccount.tupled, ClientAccount.unapply)
+        def * = (cpf, branch_name, branch_code, bank_account_number, sort_number, balance, account_ID) <> (ClientAccount.tupled, ClientAccount.unapply)
     }
     
     val db = Database.forURL("jdbc:sqlite:sqlite/accounts.db", driver="org.sqlite.JDBC")
@@ -40,13 +41,13 @@ object BankAccount{
         randomChars
     }
 
-    def generateAccountNumbers(): (Int, Int, Int, Int, String) = {
+    def generateAccountNumbers(): (String, Int, String, Int, String) = {
         // Gerar número da agência (4 dígitos)
-        val branchName = Random.nextInt(10000)
+        val branchName = Random.nextInt(10000).toString
         // Gerar dígito da agência (1 digito)
         val branchCode = Random.nextInt(10)
-        // Gerar número da conta bancária (8 dígitos)
-        val bankAccountNumber = Random.nextInt(100000000)
+        // Gerar número da conta bancária (5 dígitos)
+        val bankAccountNumber = Random.nextInt(100000).toString
         // Gerar dígito da conta (2 dígitos)
         val sortNumber = Random.nextInt(100)
         // Gerar ID da conta (256 caracteres)
@@ -55,7 +56,7 @@ object BankAccount{
         (branchName, branchCode, bankAccountNumber, sortNumber, accountID)
     }
 
-    def createBankAccount(cpf: String): Unit = {
+    def createBankAccount(cpf: String): String = {
         println("Criando conta bancária")
         
         if (!tableExists("client_bank_accounts")) {
@@ -63,9 +64,9 @@ object BankAccount{
         }
         
         val (branchName, branchCode, bankAccountNumber, sortNumber, accountID) = generateAccountNumbers()
-        val bankAccount = ClientAccount(cpf,branchName, branchCode, bankAccountNumber, sortNumber, accountID)
+        val balance = 0
+        val bankAccount = ClientAccount(cpf,branchName, branchCode, bankAccountNumber, sortNumber,balance,accountID)
         val insertAction = clientaccounts += bankAccount
-        
         // executa a ação de inserção e mostra o resultado
         
         val result = db.run(insertAction)
@@ -75,6 +76,7 @@ object BankAccount{
         }
 
         db.close()
+        return accountID
     }
 
     def clearBankDB(): Unit = {
