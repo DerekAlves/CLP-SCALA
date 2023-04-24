@@ -72,7 +72,7 @@ object BankAccount{
         val result = db.run(insertAction)
         result.onComplete {
             case Success(rowsAffected) => println(s"Inserida $rowsAffected linha(s)")
-            case Failure(exception) => println(s"Erro ao inserior conta bancária: ${exception.getMessage}")
+            case Failure(exception) => println(s"Erro ao inserir conta bancária: ${exception.getMessage}")
         }
 
         db.close()

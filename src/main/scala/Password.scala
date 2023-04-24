@@ -6,6 +6,7 @@ import scala.concurrent.duration._
 import java.nio.file.{Files, Paths}
 import scala.util.Random
 import slick.jdbc.meta.MTable
+import Profile._
 
 object Password{
 
@@ -44,5 +45,15 @@ object Password{
         if(!tableExists("user_passwords")){
             CreateUsersPasswordsDB()
         }
+        val newPassword = UserPassword(readStringInput("Digite a senha de acesso: "), readStringInput("Digite a senha principal: "), false, false, accountID)
+        val insertPassword = users_passwords += newPassword
+        val insertAndPrint = insertPassword.map{ up =>
+            println(s"Senha de acesso e principal cadastradas com sucesso!")
+        }
+        Await.result(db.run(insertAndPrint), Duration.Inf)
+        
+
     }
+
+
 }

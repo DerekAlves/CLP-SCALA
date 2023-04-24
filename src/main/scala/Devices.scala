@@ -6,12 +6,13 @@ import scala.concurrent.duration._
 import java.nio.file.{Files, Paths}
 import scala.util.Random
 import slick.jdbc.meta.MTable
+import java.net.InetAddress
 
 object Devices {
 
     case class UserDevice(device_name: String, device_id: String, accountID: String)
 
-    // define uma tablea para armazenar os usuários
+    // define uma tabela para armazenar os usuários
     class UserDevices(tag: Tag) extends Table[UserDevice](tag, "user_devices") {
         def device_name = column[String]("device_name", O.Length(256))
         def device_id = column[String]("device_id", O.PrimaryKey, O.Length(256))
@@ -42,6 +43,18 @@ object Devices {
         if(!tableExists("user_devices")){
             CreateUserDevicesDB()
         }
+
+        val device_name = InetAddress.getLocalHost().getHostName()
+        val device_id = Random.alphanumeric.take(256).mkString
+        val newUserDevice = UserDevice(device_name, device_id, accountID)
+        val insertUserDevice = user_devices += newUserDevice
+        val insertAndPrint = insertUserDevice.map{ ud =>
+            println(s"O dispositivo $device_name foi registrado com sucesso!")
+        }
+        Await.result(db.run(insertAndPrint), Duration.Inf)
+        
+
+
     }
 
 
