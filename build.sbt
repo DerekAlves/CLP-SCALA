@@ -13,5 +13,6 @@ libraryDependencies ++= Seq("org.scala-lang.modules" %% "scala-parser-combinator
     "com.typesafe.akka" %% "akka-stream" % "2.8.1-M1",
     "com.typesafe.akka" %% "akka-http-spray-json" % "10.5.1",
     "de.heikoseeberger" %% "akka-http-circe" % "1.40.0-RC3",
-    "io.circe" %% "circe-generic" % "0.15.0-M1"
+    "io.circe" %% "circe-generic" % "0.15.0-M1",
+    "com.typesafe" % "config" % "1.4.2"
 )

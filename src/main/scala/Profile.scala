@@ -1,13 +1,16 @@
 import slick.jdbc.SQLiteProfile.api._
+import slick.jdbc.SQLiteProfile.api.Database
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Success, Failure}
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import java.nio.file.{Files, Paths}
-
+import com.typesafe.config.ConfigFactory
 
 object Profile{
 
+    
+    val config = ConfigFactory.load()
     def readIntInput(prompt: String): Int = {
         println(prompt)
         scala.io.StdIn.readLine().toInt 
@@ -37,7 +40,9 @@ object Profile{
     val url = "jdbc:sqlite:sqlite/accounts.db"
 
     // cria uma conexão com o banco de dados SQLite
-    val db = Database.forURL(url, driver = "org.sqlite.JDBC")
+   //val db = Database.forConfig("slick.db")
+   val db = Database.forURL(url, driver = "org.sqlite.JDBC", executor = AsyncExecutor("test", numThreads=10, queueSize=1000))
+
 
     def CreateUsersDB (): Unit = {
         println("Criando banco de dados...")
@@ -67,7 +72,7 @@ object Profile{
         case Failure(exception) => println(s"Erro ao inserir usuário: ${exception.getMessage}")
         }
         
-        db.close()
+
         return cpf
         
     }
@@ -125,6 +130,19 @@ object Profile{
         } else {
             println(s"CPF $cpf não foi encontrado.")
             None
+        }
+        
+    }
+    def CheckLoginCPF (): String = {
+        val cpf = readStringInput("Digite o CPF: ")
+        val query = users.filter(_.cpf === cpf).result.headOption
+        val result = db.run(query)
+        val userOption = Await.result(result, Duration.Inf)
+        if (userOption.isDefined){
+            return cpf
+        } else {
+            println(s"CPF $cpf não foi encontrado.")
+            return ""
         }
         
     }

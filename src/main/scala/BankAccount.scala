@@ -6,10 +6,10 @@ import scala.concurrent.duration._
 import java.nio.file.{Files, Paths}
 import scala.util.Random
 import slick.jdbc.meta.MTable
-
+import com.typesafe.config.ConfigFactory
 
 object BankAccount{
-
+    val config = ConfigFactory.load()
     case class ClientAccount(cpf: String, branch_name: String, branch_code: Int, bank_account_number: String, sort_number: Int, balance: Float, account_ID: String)
     
     class ClientAccounts(tag: Tag) extends Table[ClientAccount](tag, "client_bank_accounts"){
@@ -23,7 +23,9 @@ object BankAccount{
         def * = (cpf, branch_name, branch_code, bank_account_number, sort_number, balance, account_ID) <> (ClientAccount.tupled, ClientAccount.unapply)
     }
     
-    val db = Database.forURL("jdbc:sqlite:sqlite/accounts.db", driver="org.sqlite.JDBC")
+    val url = "jdbc:sqlite:sqlite/accounts.db"
+    val db = Database.forURL(url, driver = "org.sqlite.JDBC", executor = AsyncExecutor("test", numThreads=10, queueSize=1000))
+    //val db = Database.forConfig("slick.db")
     val clientaccounts = TableQuery[ClientAccounts]
     
     def CreateBankDB (): Unit = {
@@ -75,7 +77,7 @@ object BankAccount{
             case Failure(exception) => println(s"Erro ao inserir conta bancária: ${exception.getMessage}")
         }
 
-        db.close()
+        //db.close()
         return accountID
     }
 
@@ -87,6 +89,23 @@ object BankAccount{
                 case Failure(exception) => println(s"Error deleting accounts: ${exception.getMessage}")
             }
             db.close()
+    }
+
+    def BankAccountLogin(): String = {
+        //recebe o cpf do cliente e retorna o id da conta bancária
+        println("Digite seu CPF: ")
+        val cpf = scala.io.StdIn.readLine()
+        val query = clientaccounts.filter(_.cpf === cpf)
+        val result = db.run(query.result)
+        val accountID = result.map(_.head.account_ID)
+        val accountIDString = Await.result(accountID, Duration.Inf)
+        if (accountIDString == null) {
+            println("CPF não encontrado")
+            return null
+        }
+        return accountIDString
+
+
     }
 
 

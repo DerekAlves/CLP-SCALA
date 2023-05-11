@@ -7,9 +7,9 @@ import java.nio.file.{Files, Paths}
 import scala.util.Random
 import slick.jdbc.meta.MTable
 import java.net.InetAddress
-
+import com.typesafe.config.ConfigFactory
 object Devices {
-
+    val config = ConfigFactory.load()
     case class UserDevice(device_name: String, device_id: String, accountID: String)
 
     // define uma tabela para armazenar os usuários
@@ -26,8 +26,8 @@ object Devices {
     val url = "jdbc:sqlite:sqlite/accounts.db"
 
     // cria uma conexão com o banco de dados SQLite
-    val db = Database.forURL(url, driver = "org.sqlite.JDBC")
-    
+    //val db = Database.forConfig("slick.db")
+    val db = Database.forURL(url, driver = "org.sqlite.JDBC", executor = AsyncExecutor("test", numThreads=10, queueSize=1000))
     def tableExists(tableName: String): Boolean = {
         val action = MTable.getTables(tableName)
         val result = Await.result(db.run(action), Duration.Inf)
@@ -52,8 +52,8 @@ object Devices {
             println(s"O dispositivo $device_name foi registrado com sucesso!")
         }
         Await.result(db.run(insertAndPrint), Duration.Inf)
-        
-
+        //db.close()
+        return
 
     }
 

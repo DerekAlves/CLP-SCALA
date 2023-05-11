@@ -7,9 +7,11 @@ import java.nio.file.{Files, Paths}
 import scala.util.Random
 import slick.jdbc.meta.MTable
 import Profile._
+import com.typesafe.config.ConfigFactory
 
 object Password{
 
+    val config = ConfigFactory.load()
     case class UserPassword(access_password: String, main_password: String, blocked_aPassword: Boolean, blocked_mPassword: Boolean, accountID: String)
 
     // define uma tablea para armazenar os usuários
@@ -28,8 +30,8 @@ object Password{
     val url = "jdbc:sqlite:sqlite/accounts.db"
 
     // cria uma conexão com o banco de dados SQLite
-    val db = Database.forURL(url, driver = "org.sqlite.JDBC")
-    
+    val db = Database.forURL(url, driver = "org.sqlite.JDBC", executor = AsyncExecutor("test", numThreads=10, queueSize=1000))
+    //val db = Database.forConfig("slick.db")
     def tableExists(tableName: String): Boolean = {
         val action = MTable.getTables(tableName)
         val result = Await.result(db.run(action), Duration.Inf)
@@ -51,8 +53,31 @@ object Password{
             println(s"Senha de acesso e principal cadastradas com sucesso!")
         }
         Await.result(db.run(insertAndPrint), Duration.Inf)
+        //db.close()
+        return
         
 
+    }
+    def CheckPassword(accountID: String): Boolean = {
+
+        val query = users_passwords.filter(_.accountID === accountID)
+        val result = Await.result(db.run(query.result), Duration.Inf)
+        val user = result.head
+        if(user.blocked_aPassword){
+            println("Senha de acesso bloqueada!")
+            return false
+        }
+        else{
+            val password = readStringInput("Digite a senha de acesso: ")
+            if(password == user.access_password){
+                return true
+            }
+            else{
+                println("Senha de acesso incorreta!")
+                return false
+            }
+        }
+    
     }
 
 
