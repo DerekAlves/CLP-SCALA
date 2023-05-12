@@ -6,6 +6,7 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import java.nio.file.{Files, Paths}
 import com.typesafe.config.ConfigFactory
+import BankAccount._
 
 object Profile{
 
@@ -101,9 +102,10 @@ object Profile{
 
 
     }
-    def QueryProfile ():  Option[(String, String, String, String, String, Int)] = {
-        val cpf = readStringInput("Digite o CPF: ")
-        val query = users.filter(_.cpf === cpf).result.headOption
+    def QueryProfile (accountID: String):  Option[(String, String, String, String, String)] = {
+        var Query_CPF_From_ID = BankAccount.clientaccounts.filter(_.account_ID === accountID).map(_.cpf).result.headOption
+        val CPF_From_ID = Await.result(db.run(Query_CPF_From_ID), Duration.Inf)
+        val query = users.filter(_.cpf === CPF_From_ID).result.headOption
         val result = db.run(query)
         val userOption = Await.result(result, Duration.Inf)
         if (userOption.isDefined){
@@ -112,7 +114,6 @@ object Profile{
             var userProfession = ""
             var userAddress = ""
             var userEmail = ""
-            var userTheme = 0
             userOption.foreach { user =>
                 userCpf = user.cpf
                 userName = user.name
@@ -125,10 +126,9 @@ object Profile{
             println(s"Profession: $userProfession")
             println(s"Address: $userAddress")
             println(s"Email: $userEmail")
-            println(s"Theme: $userTheme")
-            Some(userCpf, userName, userProfession, userAddress, userEmail, userTheme)
+            Some(userCpf, userName, userProfession, userAddress, userEmail)
         } else {
-            println(s"CPF $cpf não foi encontrado.")
+            println(s"CPF $CPF_From_ID não foi encontrado.")
             None
         }
         
@@ -154,7 +154,7 @@ object Profile{
                 case Success(rowsAffected) => println(s"Deleted $rowsAffected rows")
                 case Failure(exception) => println(s"Error deleting users: ${exception.getMessage}")
             }
-            db.close()
+            
     }
 
     

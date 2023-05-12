@@ -9,6 +9,7 @@ import akka.stream.ActorMaterializer
 import OpenAccount._
 import Profile._
 import BankAccount._
+import Login._
 import scala.util.{Success, Failure}
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -37,27 +38,13 @@ object Main extends App {
         }
       }
     } ~
-    path("change-profile") {
+    path("login") {
       post {
         complete {
           Future {
-            ChangeProfile()
-            "Perfil do usuário alterado com sucesso!"
-          }
-        }
-      }
-    } ~
-    path("query-profile") {
-      get {
-        complete {
-          Future {
-            val userProfile = QueryProfile()
-            if (userProfile != null) {
-              val (cpf, name, profession, address, email, theme) = userProfile.get
-              s"CPF: $cpf, Nome: $name, Profissão: $profession, Endereço: $address, Email: $email"
-            } else {
-              "Usuário não encontrado"
-            }
+            UserLogin()
+            "Login realizado com sucesso!"
+            
           }
         }
       }

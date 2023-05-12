@@ -80,5 +80,26 @@ object Password{
     
     }
 
+    //Implemente uma função ChangePassword que recebe como parâmetro o accountID e altera a senha principal do usuário. 
+    //A função deve receber a nova senha principal e atualizar o banco de dados.
+    def ChangePassword(accountID: String): Unit = {
+        val query = users_passwords.filter(_.accountID === accountID)
+        val result = Await.result(db.run(query.result), Duration.Inf)
+        val user = result.head
+        if(user.blocked_mPassword){
+            println("Senha principal bloqueada!")
+            return
+        }
+        else{
+            val newPassword = readStringInput("Digite a nova senha principal: ")
+            val updateQuery = users_passwords.filter(_.accountID === accountID).map(_.main_password).update(newPassword)
+            val updateAndPrint = updateQuery.map{ up =>
+                println(s"Senha principal alterada com sucesso!")
+            }
+            Await.result(db.run(updateAndPrint), Duration.Inf)
+            return
+        }
+    }
+
 
 }

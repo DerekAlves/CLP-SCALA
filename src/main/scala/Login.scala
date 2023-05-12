@@ -1,6 +1,7 @@
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model._
+import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.ActorMaterializer
 import Profile._
@@ -21,35 +22,60 @@ import com.typesafe.config.ConfigFactory
 object Login {
   implicit val system = ActorSystem("http-server", ConfigFactory.load().getConfig("akka"))
   implicit val materializer = ActorMaterializer()
-  implicit val executionContext = system.dispatcher
   val config = ConfigFactory.load()
-  val mediatorHost = "http://localhost:8023"
-  val createAccountPath = "/create-account"
-  
-  case class MediatorRequest(`type`: String, action: String, content: Option[String])
-  
-  implicit val mediatorRequestFormat = jsonFormat3(MediatorRequest)
-  
-  case class Mediator(request: HttpRequest) {
-    // Função send que envia uma solicitação HTTP para o mediador
-    def send(): Future[HttpResponse] = {
-      Http().singleRequest(request)
-    }
 
-    // Função que recebe uma resposta do mediador e retorna o conteúdo da resposta
-    def receive(response: HttpResponse): Future[String] = {
-      Unmarshal(response.entity).to[String]
-    }
-  }
 
-  def UserLogin(): Unit = {
+def UserLogin(): Unit = {
     val returnedID = BankAccountLogin()
-    if (returnedID != null){
+
+    if (returnedID != null) {
         val PasswordBool = CheckPassword(returnedID)
-        if (PasswordBool){
+        if (PasswordBool) {
             println("Login realizado com sucesso!")
-            // Colocar aqui todas as funcionalidades que o usuário pode realizar após o login: Ver perfil, mudar senha, mudar perfil, ver movimentações, etc.
+        }
+        else {
+            println("Senha incorreta!")
+            system.terminate()
         }
     }
- }
+    val routes = 
+            path("change-password") {
+                post {
+                    complete {
+                        Future {
+                            ChangePassword(returnedID)
+                            "Senha alterada com sucesso!"
+                        }
+                    }
+                }
+            } ~
+            path("add-device") {
+                post {
+                    complete {
+                        Future {
+                            CreateUserDevices(returnedID)
+                            "Dispositivo adicionado com sucesso!"
+                        }
+                    }
+                }
+            } ~
+            path("view-profile"){
+              get {
+                complete {
+                  Future {
+                    val userProfile = QueryProfile(returnedID)
+                    if (userProfile != null) {
+                      val (cpf, name, profession, address, email) = userProfile.get
+                      s"CPF: $cpf, Nome: $name, Profissão: $profession, Endereço: $address, Email: $email"
+                    } else {
+                      "Usuário não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+  
+  }
+  
+
 }
