@@ -24,58 +24,69 @@ object Login {
   implicit val materializer = ActorMaterializer()
   val config = ConfigFactory.load()
 
-
-def UserLogin(): Unit = {
+  def UserLogin(callback: Option[String] => Unit): Unit = {
     val returnedID = BankAccountLogin()
 
     if (returnedID != null) {
-        val PasswordBool = CheckPassword(returnedID)
-        if (PasswordBool) {
-            println("Login realizado com sucesso!")
-        }
-        else {
-            println("Senha incorreta!")
-            system.terminate()
-        }
+      val PasswordBool = CheckPassword(returnedID)
+      if (PasswordBool) {
+        println("Login realizado com sucesso!")
+        callback(Some(returnedID)) // chama a função de retorno de chamada passando o ID do usuário logado
+      } else {
+        println("Senha incorreta!")
+        system.terminate()
+      }
+    } else {
+      callback(None) // chama a função de retorno de chamada passando None para indicar que o usuário não foi encontrado
     }
-    val routes = 
-            path("change-password") {
-                post {
-                    complete {
-                        Future {
-                            ChangePassword(returnedID)
-                            "Senha alterada com sucesso!"
-                        }
-                    }
-                }
-            } ~
-            path("add-device") {
-                post {
-                    complete {
-                        Future {
-                            CreateUserDevices(returnedID)
-                            "Dispositivo adicionado com sucesso!"
-                        }
-                    }
-                }
-            } ~
-            path("view-profile"){
-              get {
-                complete {
-                  Future {
-                    val userProfile = QueryProfile(returnedID)
-                    if (userProfile != null) {
-                      val (cpf, name, profession, address, email) = userProfile.get
-                      s"CPF: $cpf, Nome: $name, Profissão: $profession, Endereço: $address, Email: $email"
-                    } else {
-                      "Usuário não encontrado"
-                    }
-                  }
+  }
+
+  val routes = (userID: Option[String]) =>
+    path("change-password") {
+      post {
+        complete {
+          userID match {
+            case Some(id) =>
+              Future {
+                ChangePassword(id)
+                "Senha alterada com sucesso!"
+              }
+            case None => "Usuário não encontrado"
+          }
+        }
+      }
+    } ~
+    path("add-device") {
+      post {
+        complete {
+          userID match {
+            case Some(id) =>
+              Future {
+                CreateUserDevices(id)
+                "Dispositivo adicionado com sucesso!"
+              }
+            case None => "Usuário não encontrado"
+          }
+        }
+      }
+    } ~
+    path("view-profile") {
+      get {
+        complete {
+          userID match {
+            case Some(id) =>
+              Future {
+                val userProfile = QueryProfile(id)
+                if (userProfile != null) {
+                  val (cpf, name, profession, address, email) = userProfile.get
+                  s"CPF: $cpf, Nome: $name, Profissão: $profession, Endereço: $address, Email: $email"
+                } else {
+                  "Usuário não encontrado"
                 }
               }
-            }
-  
-  }
-  
-
+            case None => "Usuário não encontrado"
+          }
+        }
+      }
+    }
 }
