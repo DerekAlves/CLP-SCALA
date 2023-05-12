@@ -18,6 +18,14 @@ import com.typesafe.config.ConfigFactory
 //TODO: VERIFICAR SE NÃO HÁ REPETIÇÃO DE DEFINIÇÕES DO SERVIDOR NO ARQUIVO OPENACCOUNT
 object Main extends App {
 
+  def callback(result: Option[String]): Unit = {
+  result match {
+    case Some(res) => println(res)
+    case None => println("Não foi possível realizar a operação")
+  }
+}
+
+
   val config = ConfigFactory.load()
   // Cria um ActorSystem e um ActorMaterializer para Akka HTTP
   implicit val system = ActorSystem("http-server", ConfigFactory.load().getConfig("akka"))
@@ -42,7 +50,7 @@ object Main extends App {
       post {
         complete {
           Future {
-            UserLogin()
+            UserLogin(callback)
             "Login realizado com sucesso!"
             
           }
