@@ -91,15 +91,23 @@ object Password{
             return
         }
         else{
+            // Mudar a senha principal e senha de acesso
             val newPassword = readStringInput("Digite a nova senha principal: ")
+            val newPasswordAccess = readStringInput("Digite a nova senha de acesso: ")
             val updateQuery = users_passwords.filter(_.accountID === accountID).map(_.main_password).update(newPassword)
+            val updateQuery2 = users_passwords.filter(_.accountID === accountID).map(_.access_password).update(newPasswordAccess)
             val updateAndPrint = updateQuery.map{ up =>
                 println(s"Senha principal alterada com sucesso!")
             }
+            val updateAndPrint2 = updateQuery2.map{ up =>
+                println(s"Senha de acesso alterada com sucesso!")
+            }
             Await.result(db.run(updateAndPrint), Duration.Inf)
+            Await.result(db.run(updateAndPrint2), Duration.Inf)
             return
-        }
-    }
+
+        }    
+    }  
 
 
 }

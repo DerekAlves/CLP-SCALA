@@ -23,7 +23,7 @@ object OpenAccount {
   implicit val materializer = ActorMaterializer()
   implicit val executionContext = system.dispatcher
   val config = ConfigFactory.load()
-  val mediatorHost = "http://localhost:8023"
+  val mediatorHost = "http://localhost:8000"
   val createAccountPath = "/create-account"
   
   case class MediatorRequest(`type`: String, action: String, content: Option[String])

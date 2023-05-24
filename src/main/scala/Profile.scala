@@ -78,8 +78,9 @@ object Profile{
         
     }
 
-    def ChangeProfile (): Option[UserProfile] = {
-        val cpf = readStringInput("Digite o CPF: ")
+    def ChangeProfile (accountID: String):  Option[UserProfile] = {
+        var Query_CPF_From_ID = BankAccount.clientaccounts.filter(_.account_ID === accountID).map(_.cpf).result.headOption
+        val cpf =  Await.result(db.run(Query_CPF_From_ID), Duration.Inf)
         val query = users.filter(_.cpf === cpf).result.headOption
         val result= db.run(query)
         val userOption = Await.result(result, Duration.Inf)

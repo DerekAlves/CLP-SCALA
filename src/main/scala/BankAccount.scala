@@ -108,6 +108,27 @@ object BankAccount{
 
     }
 
+    def ViewBankAccount(accountID: String):  Option[(String, String, String, String, String)] = {
+        // recebe o id da conta bancária e mostra o saldo, agência e dígito, número da conta e dígito
+        val query = clientaccounts.filter(_.account_ID === accountID)
+        val result = db.run(query.result)
+        val account = result.map(_.head)
+        val accountString = Await.result(account, Duration.Inf)
+        if (accountString == null) {
+            println("Conta não encontrada")
+            return None
+        }
+        val branchName = accountString.branch_name
+        val branchCode = accountString.branch_code.toString
+        val bankAccountNumber = accountString.bank_account_number
+        val sortNumber = accountString.sort_number.toString
+        val balance = accountString.balance.toString
+        Some(branchName , branchCode, bankAccountNumber, sortNumber, balance)
+
+ 
+    }
+
+
 
 
 }

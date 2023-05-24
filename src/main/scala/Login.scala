@@ -23,70 +23,42 @@ object Login {
   implicit val system = ActorSystem("http-server", ConfigFactory.load().getConfig("akka"))
   implicit val materializer = ActorMaterializer()
   val config = ConfigFactory.load()
+  val mediatorHost = "http://localhost:8000"
 
-  def UserLogin(callback: Option[String] => Unit): Unit = {
+    case class Mediator(request: HttpRequest) {
+    // Função send que envia uma solicitação HTTP para o mediador
+    def send(): Future[HttpResponse] = {
+      Http().singleRequest(request)
+    }
+
+    // Função que recebe uma resposta do mediador e retorna o conteúdo da resposta
+    def receive(response: HttpResponse): Future[String] = {
+      Unmarshal(response.entity).to[String]
+    }
+  }
+
+  def UserLogin(): String = {
     val returnedID = BankAccountLogin()
 
     if (returnedID != null) {
       val PasswordBool = CheckPassword(returnedID)
       if (PasswordBool) {
         println("Login realizado com sucesso!")
-        callback(Some(returnedID)) // chama a função de retorno de chamada passando o ID do usuário logado
+        return returnedID
       } else {
         println("Senha incorreta!")
         system.terminate()
+        return null
       }
     } else {
-      callback(None) // chama a função de retorno de chamada passando None para indicar que o usuário não foi encontrado
+      return null
     }
   }
+ 
+   
 
-  val routes = (userID: Option[String]) =>
-    path("change-password") {
-      post {
-        complete {
-          userID match {
-            case Some(id) =>
-              Future {
-                ChangePassword(id)
-                "Senha alterada com sucesso!"
-              }
-            case None => "Usuário não encontrado"
-          }
-        }
-      }
-    } ~
-    path("add-device") {
-      post {
-        complete {
-          userID match {
-            case Some(id) =>
-              Future {
-                CreateUserDevices(id)
-                "Dispositivo adicionado com sucesso!"
-              }
-            case None => "Usuário não encontrado"
-          }
-        }
-      }
-    } ~
-    path("view-profile") {
-      get {
-        complete {
-          userID match {
-            case Some(id) =>
-              Future {
-                val userProfile = QueryProfile(id)
-                if (userProfile != null) {
-                  val (cpf, name, profession, address, email) = userProfile.get
-                  s"CPF: $cpf, Nome: $name, Profissão: $profession, Endereço: $address, Email: $email"
-                } else {
-                  "Usuário não encontrado"
-                }
-              }
-            case None => "Usuário não encontrado"
-          }
-        }
-      }
-    }
+
+
+  
+  
 }
